@@ -41,7 +41,7 @@ namespace gz
       /// \brief Load an image file as a heightmap.
       /// \param[in] _filename the path to the image file.
       /// \return True when the operation succeeds to open a file.
-      public: int Load(const std::string &_filename = "");
+      public: int Load(const std::filesystem::path &_filename = "");
 
       // Documentation inherited.
       public: void FillHeightMap(int _subSampling, unsigned int _vertSize,
@@ -50,7 +50,7 @@ namespace gz
           std::vector<float> &_heights) const;
 
       // Documentation inherited.
-      public: std::string Filename() const;
+      public: std::filesystem::path Filename() const;
 
       // Documentation inherited.
       public: unsigned int Height() const;

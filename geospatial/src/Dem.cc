@@ -94,7 +94,7 @@ void Dem::SetSphericalCoordinates(
 }
 
 //////////////////////////////////////////////////
-int Dem::Load(const std::string &_filename)
+int Dem::Load(const std::filesystem::path &_filename)
 {
   unsigned int width;
   unsigned int height;
@@ -508,7 +508,7 @@ int Dem::LoadData()
 }
 
 //////////////////////////////////////////////////
-std::string Dem::Filename() const
+std::filesystem::path Dem::Filename() const
 {
   return this->dataPtr->filename;
 }

@@ -20,6 +20,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <filesystem>
 
 #include <gz/math/Vector3.hh>
 #include <gz/math/Angle.hh>
@@ -55,7 +56,7 @@ namespace gz
       /// \brief Load a DEM file.
       /// \param[in] _filename the path to the terrain file.
       /// \return 0 when the operation succeeds to open a file.
-      public: int Load(const std::string &_filename = "");
+      public: int Load(const std::filesystem::path &_filename = "");
 
       /// \brief Get the elevation of a terrain's point in meters.
       /// \param[in] _x X coordinate of the terrain in raster coordinates.
@@ -80,20 +81,20 @@ namespace gz
       public: bool GeoReferenceOrigin(gz::math::Angle &_latitude,
                   gz::math::Angle &_longitude) const;
 
-      /// \brief Get the terrain's height. Due to the Ogre constrains, this
+      /// \brief Get the terrain's height. Due to the Ogre constraints, this
       /// value will be a power of two plus one. The value returned might be
       /// different that the original DEM height because Data() adds the
       /// padding if necessary.
-      /// \return The terrain's height (points) satisfying the ogre constrains
+      /// \return The terrain's height (points) satisfying the ogre constraints
       /// (squared terrain with a height value that must be a power of two plus
       /// one).
       public: unsigned int Height() const override;
 
-      /// \brief Get the terrain's width. Due to the Ogre constrains, this
+      /// \brief Get the terrain's width. Due to the Ogre constraints, this
       /// value will be a power of two plus one. The value returned might be
       /// different that the original DEM width because GetData() adds the
       /// padding if necessary.
-      /// \return The terrain's width (points) satisfying the ogre constrains
+      /// \return The terrain's width (points) satisfying the ogre constraints
       /// (squared terrain with a width value that must be a power of two plus
       /// one).
       public: unsigned int Width() const override;
@@ -135,13 +136,13 @@ namespace gz
                                  gz::math::Angle &_longitude) const;
 
       /// \brief Get the terrain file as a data array. Due to the Ogre
-      /// constrains, the data might be stored in a bigger vector representing
+      /// constraints, the data might be stored in a bigger vector representing
       /// a squared terrain with padding.
       /// \return 0 when the operation succeeds to open a file.
       private: int LoadData();
 
       // Documentation inherited.
-      public: std::string Filename() const override;
+      public: std::filesystem::path Filename() const override;
 
       /// internal
       /// \brief Pointer to the private data.

@@ -17,6 +17,7 @@
 #ifndef GZ_COMMON_GEOSPATIAL_HEIGHTMAPDATA_HH_
 #define GZ_COMMON_GEOSPATIAL_HEIGHTMAPDATA_HH_
 
+#include <filesystem>
 #include <string>
 #include <vector>
 #include <gz/math/Vector3.hh>
@@ -68,7 +69,13 @@ namespace gz
 
       /// \brief Get the full filename of loaded heightmap image/dem
       /// \return The filename used to load the heightmap image/dem
-      public: virtual std::string Filename() const = 0;
+      public: virtual std::filesystem::path Filename() const = 0;
+
+      /// \copydoc Filename()
+      public: virtual std::filesystem::path Filepath() const
+              {
+                return std::filesystem::path(Filename());
+              }
     };
   }
 }

@@ -27,7 +27,7 @@ ImageHeightmap::ImageHeightmap()
 }
 
 //////////////////////////////////////////////////
-int ImageHeightmap::Load(const std::string &_filename)
+int ImageHeightmap::Load(const std::filesystem::path &_filename)
 {
   if (this->img.Load(_filename) != 0)
   {
@@ -94,7 +94,7 @@ void ImageHeightmap::FillHeightMap(int _subSampling,
 }
 
 //////////////////////////////////////////////////
-std::string ImageHeightmap::Filename() const
+std::filesystem::path ImageHeightmap::Filename() const
 {
   return this->img.Filename();
 }
