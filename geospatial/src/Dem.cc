@@ -199,38 +199,14 @@ int Dem::Load(const std::filesystem::path &_filename)
   const double defaultNoDataValue = -9999;
   float noDataValue = this->dataPtr->band->GetNoDataValue(&validNoData);
 
-  if (validNoData <= 0)
-    noDataValue = defaultNoDataValue;
-
-  double min = gz::math::MAX_D;
-  double max = -gz::math::MAX_D;
-  for (const auto &d : this->dataPtr->demData)
-  {
-    if (math::equal(d, this->dataPtr->bufferVal))
-      continue;
-
-    // All comparisons to NaN return false, so guard against NaN NoData
-    if (!std::isnan(noDataValue) &&  math::equal(d, noDataValue))
-      continue;
-
-    if (!std::isfinite(d))
-    {
-      continue;
-    }
-
-    if (d < min)
-      min = d;
-    if (d > max)
-      max = d;
-  }
-  if (gz::math::equal(min, gz::math::MAX_D) ||
-      gz::math::equal(max, -gz::math::MAX_D))
-  {
-    gzwarn << "DEM is composed of 'nodata' values!" << std::endl;
-  }
-
-  this->dataPtr->minElevation = min;
-  this->dataPtr->maxElevation = max;
+  
+  int validMinMax = 0;
+  const auto min = this->dataPtr->band->GetMinimum(&validMinMax);
+  if(validMinMax)
+    this->dataPtr->minElevation = min;
+  const auto max = this->dataPtr->band->GetMaximum(&validMinMax);
+  if(validNoData)
+    this->dataPtr->maxElevation = max;
 
   // Buffer to min elevation
   for (auto &d : this->dataPtr->demData)
